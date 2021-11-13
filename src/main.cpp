@@ -7,14 +7,19 @@
 #include <Sim.h>
 
 #define WARNING_SPEED 35
+#define DISTANCE_BETWEEN_ULTRASONIC 40
+
+#define D5 14
+#define D6 12
+#define D7 13
+#define D8 15
 
 Request req;
-Speed speed(40);
+Speed speed(DISTANCE_BETWEEN_ULTRASONIC);
 Sim gps;
-Ultrasonic ultrasonic_0(12);
-Ultrasonic ultrasonic_1(14);
-SoftwareSerial softwareSerial(13, 15);
-int conteur;
+Ultrasonic ultrasonic_0(D5);
+Ultrasonic ultrasonic_1(D6);
+SoftwareSerial softwareSerial(D7, D8);
 
 void set_GPS();
 
@@ -35,14 +40,16 @@ void loop()
   {
     if (softwareSerial.available())
     {
-      String buffer = softwareSerial.readStringUntil('\n');
-      //Serial.println(buffer);
-      gps.set_NMEA_data(buffer);
+      String buffer = softwareSerial.readStringUntil('\n'); // Exemple"$GPRMC,105532.000,A,4334.25232,N,127.99024,E,0.31,193.96,121121,,,A*89"
+      gps.set_NMEA_data(buffer);                                        //|              |
+      
     }
-    if (gps.is_GPRMC())
-      {
-        if (gps.is_Status_A())
+    if (gps.is_GPRMC())                                             //$GPRMC           |
+      {                                                                                //|
+        if (gps.is_Status_A())                                                         //A = DATA VALID V = DATA NOT VALID
+        {
           gps.set_gps_fixed();
+        }
       }
   }
   long range_0 = ultrasonic_0.MeasureInCentimeters();
@@ -72,7 +79,7 @@ void loop()
     while (req.code_http != 200)
     {
       Serial.println(req.code_http);
-      req.post_CT_DATA();
+      req.post_DATA();
     }
     Serial.println("DEEP SLEEP ON");
     ESP.deepSleep(0);
