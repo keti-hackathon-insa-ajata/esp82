@@ -42,9 +42,8 @@ void loop()
     {
       String buffer = softwareSerial.readStringUntil('\n'); // Exemple"$GPRMC,105532.000,A,4334.25232,N,127.99024,E,0.31,193.96,121121,,,A*89"
       gps.set_NMEA_data(buffer);                                        //|              |
-      
-    }
-    if (gps.is_GPRMC())                                             //$GPRMC           |
+    }                                                                   //|              | 
+    if (gps.is_GPRMC())                                              //$GPRMC            |
       {                                                                                //|
         if (gps.is_Status_A())                                                         //A = DATA VALID V = DATA NOT VALID
         {

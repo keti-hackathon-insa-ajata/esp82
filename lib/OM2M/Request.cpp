@@ -31,15 +31,7 @@ void Request::wifi_scan() {
 
 void Request::Wifi_cnx() {
     WiFi.begin(this->SSID, this->PASS);
-    Serial.print("Connecting");
-    /*while (WiFi.status() != WL_CONNECTED) 
-    {
-        delay(500);
-        Serial.print('.');
-    }
-    Serial.println("");
-    Serial.print("Connected to WiFi network with IP Address: ");
-    Serial.println(WiFi.localIP());*/
+    Serial.println("Connecting .... ");
 }
 
 
@@ -59,7 +51,7 @@ void Request::get_data(Speed spd, Sim gps) {
     this->data.push_back(body);
 }
 
-void Request::post_CT_DATA() {
+void Request::post_DATA() {
     WiFiClient client;
     HTTPClient httpClient;
 
@@ -78,15 +70,4 @@ void Request::post_CT_DATA() {
     httpClient.end();
     Serial.println(content);
     delay(5000);
-}
-
-void Request::post_CT_DESCREPTOR() {
-    HTTPClient http;
-    WiFiClient client;
-    http.begin(client, this->url_descreptor);
-    http.addHeader("X-M2M-Origin", "admin:admin");
-    http.addHeader("Content-Type", "application/xml;ty=4");
-    String httpRestData = "{\"m2m:cin\": \"test\"}";
-    int http_res = http.POST(httpRestData);
-    Serial.printf("Respond; %d", http_res);
 }

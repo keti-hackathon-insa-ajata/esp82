@@ -12,10 +12,6 @@ void Speed::set_range_cm(long range_0, long range_1) {
 
 void Speed::compute_vehicles_speed() {
 
-   // Serial.println("Start Capturing Vehicule Speed ....");
-
-    //Serial.print(this->last_range_0 - this->range_cm_0);Serial.print(" cm_0: ");
-    //Serial.print(this->last_range_1 - this->range_cm_1);Serial.print(" cm_1: ");
 
     int32_t speed_range_0 = (this->last_range_0 - this->range_cm_0) * 1E3 / (millis()- this->last_timestamp_range_0);
     int32_t speed_range_1 = (this->last_range_1 - this->range_cm_1) * 1E3 / (millis()- this->last_timestamp_range_1);
@@ -25,10 +21,6 @@ void Speed::compute_vehicles_speed() {
     if(speed_range_0 > 1000) {this->timestamp_sensor_0 = micros();  this->flag_0 = true;}
     if(speed_range_1 > 1000) {this->timestamp_sensor_1 = micros();  this->flag_1 = true;}
     
-    //Serial.print(speed_range_0);Serial.print(" cm/ms: ");
-    //Serial.print(speed_range_1);Serial.println(" cm/ms: ");
-    //Serial.print(this->flag_0);Serial.print(" flag_0 ");
-    //Serial.print(this->flag_1);Serial.print(" flag_1 ");
     
     if(flag_0 && flag_1){
         this->vehicles_speed = this->sensors_distance_cm * 1E1 * 3600 / abs(this->timestamp_sensor_0 - this->timestamp_sensor_1);
@@ -43,15 +35,6 @@ void Speed::compute_vehicles_speed() {
     this->last_timestamp_range_1 = millis();
 
     if(this->vehicles_speed > 5000) this->vehicles_speed = 0;
-    
-    //Serial.print(this->range_cm_0);Serial.print(" cm_0: ");
-    //Serial.print(this->range_cm_1);Serial.println(" cm_1: ");
-    /*Serial.print(this->timestamp_sensor_0);Serial.print(" us: ");
-    Serial.print(this->timestamp_sensor_1);Serial.print(" us: ");*/
-    
-    
-    //Serial.print(this->vehicles_speed);
-    //Serial.println(" km/h: ");
 }
 
 long Speed::get_vehicule_speed() {

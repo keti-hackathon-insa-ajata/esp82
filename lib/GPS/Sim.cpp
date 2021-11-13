@@ -16,7 +16,7 @@ void Sim::set_NMEA_data(String data)
 bool Sim::is_GPRMC()
 {
     String buffer = this->NMEA_data;
-    Serial.println("");
+    //Serial.println("");
     Serial.println(buffer);
     uint8_t buffer_size = this->NMEA_data.length();
     buffer.remove(6, buffer_size);
