@@ -21,7 +21,7 @@ enum GPRMC {
 class Sim {
 private:
     /* data */
-    String NMEA_data = "$GPRMC,105532.000,A,4334.25232,N,127.99024,E,0.31,193.96,121121,,,A*89";
+    String NMEA_data = "$GPRRC,105532.000,V,4334.25232,N,127.99024,E,0.31,193.96,121121,,,A*89";
     char* UTC_Time;
     char* Msg_id;
     char* Status;
